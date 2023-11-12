@@ -30,9 +30,11 @@ Things you may want to cover:
 | nickname           | string | null: false |
 | email              | string | null: false |
 | encrypted_password | string | null: false |
-| full_name          | string | null: false |
-| birth              | integer| null: false |
-| address            | integer| null: false |
+| family_name        | string | null: false |
+| first_name         | string | null: false |
+| furigana_family_name | string | null: false |
+| furigana_first_name  | string | null: false |
+| birth              | date   | null: false |
 
 has_many :items
 has_many :shipping_information
@@ -44,22 +46,25 @@ belongs_to :purchase_history
 | Column             | Type   | Options     |
 | ------------------ | ------ | ----------- |
 | item_name          | string | null: false |
-| price              | string | null: false |
-| condition          | string | null: false |
-| shipping_cost      | integer| null: false |
-| region             | string | null: false |
-| shipping_date      | integer| null: false |
+| description        | string | null: false |
+| price              | integer| null: false |
+| category_id        | integer| null: false |
+| condition_id       | integer| null: false |
+| shipping_fee_id    | integer| null: false |
+| region_id          | integer| null: false |
+| shipping_date_id   | integer| null: false |
+| user               |references | null: false, foreign_key: true |
 
 belongs_to :user
 belongs_to :purchase_history
 
 
-## purchase_history テーブル
+## purchase_histories テーブル
 
 | Column             | Type      | Options                        |
 | ------------------ | --------- | ------------------------------ |
-| user_id            |references | null: false, foreign_key: true |
-| item _id           |references | null: false, foreign_key: true |
+| user            |references | null: false, foreign_key: true |
+| item            |references | null: false, foreign_key: true |
 
 belongs_to :user
 belongs_to :item
@@ -70,11 +75,14 @@ belongs_to :shipping_information
 
 | Column             | Type      | Options                        |
 | ------------------ | --------- | ------------------------------ |
-| user_id            |references | null: false, foreign_key: true |
-| item_id            |references | null: false, foreign_key: true |
-| address            |string     | null: false                    |
-| card               |integer    | null: false                    |
-| phone              |integer    | null: false                    |
+| user            |references | null: false, foreign_key: true |
+| item            |references | null: false, foreign_key: true |
+| post            |string     | null: false                    |
+| prefecture_id   |integer    | null: false                    |
+| city            |string     | null: false                    |
+| street          |string     | null: false                    |
+| building        |string     |                                |
+| phone              |string     | null: false                    |
 
 belongs_to :user
 belongs_to :item
