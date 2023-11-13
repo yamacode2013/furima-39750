@@ -28,7 +28,7 @@ Things you may want to cover:
 | Column             | Type   | Options     |
 | ------------------ | ------ | ----------- |
 | nickname           | string | null: false |
-| email              | string | null: false |
+| email              | string | null: false, foreign_key: true |
 | encrypted_password | string | null: false |
 | family_name        | string | null: false |
 | first_name         | string | null: false |
@@ -46,12 +46,12 @@ belongs_to :purchase_history
 | Column             | Type   | Options     |
 | ------------------ | ------ | ----------- |
 | item_name          | string | null: false |
-| description        | string | null: false |
+| description        | text | null: false |
 | price              | integer| null: false |
 | category_id        | integer| null: false |
 | condition_id       | integer| null: false |
 | shipping_fee_id    | integer| null: false |
-| region_id          | integer| null: false |
+| prefecture_id      | integer| null: false |
 | shipping_date_id   | integer| null: false |
 | user               |references | null: false, foreign_key: true |
 
@@ -71,12 +71,10 @@ belongs_to :item
 belongs_to :shipping_information
 
 
-## shipping_information テーブル
+## shipping_informations テーブル
 
 | Column             | Type      | Options                        |
 | ------------------ | --------- | ------------------------------ |
-| user            |references | null: false, foreign_key: true |
-| item            |references | null: false, foreign_key: true |
 | post            |string     | null: false                    |
 | prefecture_id   |integer    | null: false                    |
 | city            |string     | null: false                    |
