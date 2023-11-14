@@ -28,7 +28,7 @@ Things you may want to cover:
 | Column             | Type   | Options     |
 | ------------------ | ------ | ----------- |
 | nickname           | string | null: false |
-| email              | string | null: false, foreign_key: true |
+| email              | string | null: false, unique: true |
 | encrypted_password | string | null: false |
 | family_name        | string | null: false |
 | first_name         | string | null: false |
@@ -37,8 +37,7 @@ Things you may want to cover:
 | birth              | date   | null: false |
 
 has_many :items
-has_many :shipping_information
-belongs_to :purchase_history
+has_many :purchase_history
 
 
 ## items テーブル
@@ -56,7 +55,7 @@ belongs_to :purchase_history
 | user               |references | null: false, foreign_key: true |
 
 belongs_to :user
-belongs_to :purchase_history
+has_one :purchase_history
 
 
 ## purchase_histories テーブル
@@ -67,8 +66,8 @@ belongs_to :purchase_history
 | item            |references | null: false, foreign_key: true |
 
 belongs_to :user
-belongs_to :item
-belongs_to :shipping_information
+has_one :item
+has_one :shipping_information
 
 
 ## shipping_informations テーブル
@@ -79,9 +78,8 @@ belongs_to :shipping_information
 | prefecture_id   |integer    | null: false                    |
 | city            |string     | null: false                    |
 | street          |string     | null: false                    |
-| building        |string     |                                |
-| phone              |string     | null: false                    |
+| building        |string     | null: false                    |
+| phone           |string     | null: false                    |
+| purchase_histories|references | null: false, foreign_key: true |
 
-belongs_to :user
-belongs_to :item
-belongs_to :purchase_history
+has_one :purchase_history
