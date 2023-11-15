@@ -37,7 +37,7 @@ Things you may want to cover:
 | birth              | date   | null: false |
 
 has_many :items
-has_many :purchase_history
+has_many :purchase_histories
 
 
 ## items テーブル
@@ -66,7 +66,7 @@ has_one :purchase_history
 | item            |references | null: false, foreign_key: true |
 
 belongs_to :user
-has_one :item
+belongs_to :item
 has_one :shipping_information
 
 
@@ -78,8 +78,8 @@ has_one :shipping_information
 | prefecture_id   |integer    | null: false                    |
 | city            |string     | null: false                    |
 | street          |string     | null: false                    |
-| building        |string     | null: false                    |
+| building        |string     |                                |
 | phone           |string     | null: false                    |
 | purchase_histories|references | null: false, foreign_key: true |
 
-has_one :purchase_history
+belongs_to :purchase_history
