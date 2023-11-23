@@ -34,7 +34,7 @@ Things you may want to cover:
 | first_name         | string | null: false |
 | furigana_family_name | string | null: false |
 | furigana_first_name  | string | null: false |
-| birth              | date   | null: false |
+| birth_date              | date   | null: false |
 
 has_many :items
 has_many :purchase_histories
