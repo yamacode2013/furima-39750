@@ -90,3 +90,8 @@ gem 'factory_bot_rails'
 group :development, :test do
   gem 'faker'
 end
+
+gem 'mini_magick'
+gem 'image_processing', '~> 1.2'
+
+gem 'active_hash'
