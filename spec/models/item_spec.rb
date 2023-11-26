@@ -2,8 +2,6 @@ require 'rails_helper'
 require 'faker'
 
 RSpec.describe Item, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
-
   before do
     @item = FactoryBot.build(:item)
   end
@@ -32,15 +30,15 @@ RSpec.describe Item, type: :model do
       end
       it '商品名が41文字以上だと登録できない'do
         long_item_name = 'a' * 41
-        item = Item.new(item_name: long_item_name)
-        item.valid?
-        expect(item.errors[:item_name]).to include('is too long (maximum is 40 characters)')
+        @item.item_name = long_item_name
+        @item.valid?
+        expect(@item.errors[:item_name]).to include('is too long (maximum is 40 characters)')
       end
       it '商品説明が1001文字以上だと登録できない'do
         long_description = 'a' * 1001
-        item = Item.new(description: long_description)
-        item.valid?
-        expect(item.errors[:description]).to include('is too long (maximum is 1000 characters)')
+        @item.description = long_description
+        @item.valid?
+        expect(@item.errors[:description]).to include('is too long (maximum is 1000 characters)')
       end
       it 'カテゴリーが"---"だと登録できない'do
         @item.category_id = 1
@@ -66,6 +64,26 @@ RSpec.describe Item, type: :model do
         @item.prefecture_id = 1
         @item.valid?
         expect(@item.errors[:prefecture_id]).to include("can't be blank")
+      end
+      it '価格に半角数字以外が含まれている場合は出品できない'do
+        @item.price = 'abc'
+        @item.valid?
+        expect(@item.errors[:price]).to include("is not a number")
+      end
+      it '価格が300円未満では出品できない'do
+        @item.price = '100'
+        @item.valid?
+        expect(@item.errors[:price]).to include("must be greater than or equal to 300")
+      end
+      it '価格が9_999_999円を超えると出品できない'do
+        @item.price = '1000000000000'
+        @item.valid?
+        expect(@item.errors[:price]).to include("must be less than or equal to 9999999")
+      end
+      it 'userが紐付いていなければ出品できない'do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors[:user]).to include("must exist")
       end
     end
   end
