@@ -21,12 +21,14 @@ class ItemsController < ApplicationController
   end
 
   def show
-    
+
   end
 
   def edit
-    unless user_signed_in? && current_user.id == @item.user_id
-      redirect_to action: :index
+    if @item.purchase_history.present?
+      redirect_to root_path, alert: "This item has already been sold."
+    elsif current_user.id != @item.user_id
+      redirect_to root_path, alert: "You don't have permission to edit this item."
     end
   end
 
