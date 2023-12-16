@@ -55,7 +55,12 @@ RSpec.describe PurchaseShipping, type: :model do
           @purchase_shipping.valid?
           expect(@purchase_shipping.errors.full_messages).to include("Phone can't be blank")
         end
-        it '電話番号が10,11桁以外だと登録できない'do
+        it '電話番号が9桁以下だと登録できない'do
+          @purchase_shipping.phone = '09077'
+          @purchase_shipping.valid?
+          expect(@purchase_shipping.errors.full_messages).to include("Phone should be 10 or 11 digits")
+        end
+        it '電話番号が12桁以上だと登録できない'do
           @purchase_shipping.phone = '09077777777777777'
           @purchase_shipping.valid?
           expect(@purchase_shipping.errors.full_messages).to include("Phone should be 10 or 11 digits")
@@ -65,7 +70,16 @@ RSpec.describe PurchaseShipping, type: :model do
           @purchase_shipping.valid?
           expect(@purchase_shipping.errors.full_messages).to include("Phone should be 10 or 11 digits")
         end
-
+        it 'userが紐づいていないと登録できないこと' do
+          @purchase_shipping.user_id = nil
+          @purchase_shipping.valid?
+          expect(@purchase_shipping.errors[:user_id]).to include("can't be blank")
+        end    
+        it 'itemが紐づいていないと登録できないこと' do
+          @purchase_shipping.item_id = nil
+          @purchase_shipping.valid?
+          expect(@purchase_shipping.errors[:item_id]).to include("can't be blank")
+        end
       end
   end
 end
